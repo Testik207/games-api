@@ -11,7 +11,26 @@ servers:
 tags:
 - name: games
   description: List, read, create and delete games
-paths: {}
+paths:
+  /games:
+    get:
+      tags:
+      - games
+      summary: Returns a list of game names
+      operationId: listGames
+      responses:
+        '200':
+          description: Game names only, without full details.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+              - The Witcher 3
+              - Cyberpunk 2077
+              - Minecraft
 components:
   schemas:
     Error:
