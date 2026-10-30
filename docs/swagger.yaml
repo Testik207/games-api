@@ -31,6 +31,57 @@ paths:
               - The Witcher 3
               - Cyberpunk 2077
               - Minecraft
+    post:
+      tags:
+      - games
+      summary: Creates a new game
+      operationId: createGame
+      requestBody:
+        required: true
+        description: Name and non-negative numeric price. The server assigns the ID.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewGame'
+            example:
+              name: Tetris
+              price: 0.99
+      responses:
+        '201':
+          description: Game created. Location identifies the new resource.
+          headers:
+            Location:
+              description: URL of the created game
+              schema:
+                type: string
+                format: uri
+              example: http://localhost:8080/games/4
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+              example:
+                id: 4
+                name: Tetris
+                price: 0.99
+        '400':
+          description: Missing or invalid fields, missing JSON body, or malformed
+            JSON.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: Missing or invalid fields, missing JSON body, or malformed
+                  JSON.
+        '413':
+          description: Request body is too large.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: Request body is too large.
   /games/{id}:
     parameters:
     - name: id
@@ -97,6 +148,20 @@ components:
           format: double
           minimum: 0
       example: *id001
+    NewGame:
+      type: object
+      required:
+      - name
+      - price
+      properties:
+        name:
+          type: string
+          minLength: 1
+          pattern: \S
+        price:
+          type: number
+          format: double
+          minimum: 0
     Error:
       type: object
       required:
