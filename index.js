@@ -24,6 +24,24 @@ function createApp() {
   app.get('/games', (req, res) => res.json(games.map(game => game.name)));
   // END STEP 2
 
+  // BEGIN STEP 3
+  function parseId(req, res) {
+    const id = Number(req.params.id);
+    if (!/^\d+$/.test(req.params.id) || !Number.isSafeInteger(id) || id < 1) {
+      res.status(400).json({ error: 'id must be a positive integer.' });
+      return null;
+    }
+    return id;
+  }
+
+  app.get('/games/:id', (req, res) => {
+    const id = parseId(req, res);
+    if (id === null) return;
+    const game = games.find(game => game.id === id);
+    if (!game) return res.status(404).json({ error: `Game ${id} was not found.` });
+    return res.json(game);
+  });
+  // END STEP 3
 
 
 
