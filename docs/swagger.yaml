@@ -125,6 +125,31 @@ paths:
                 $ref: '#/components/schemas/Error'
               example:
                 error: Game 999 was not found.
+    delete:
+      tags:
+      - games
+      summary: Deletes a game
+      description: The ID is taken from the URL. No request body is required.
+      operationId: deleteGame
+      responses:
+        '204':
+          description: Game deleted. The response body is empty.
+        '400':
+          description: id must be a positive integer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: id must be a positive integer.
+        '404':
+          description: Game 999 was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: Game 999 was not found.
 components:
   schemas:
     Game:

@@ -66,6 +66,16 @@ function createApp() {
   });
   // END STEP 4
 
+  // BEGIN STEP 5
+  app.delete('/games/:id', (req, res) => {
+    const id = parseId(req, res);
+    if (id === null) return;
+    const index = games.findIndex(game => game.id === id);
+    if (index === -1) return res.status(404).json({ error: `Game ${id} was not found.` });
+    games.splice(index, 1);
+    return res.status(204).end();
+  });
+  // END STEP 5
 
   app.use((req, res) => res.status(404).json({ error: 'Endpoint was not found.' }));
   app.use((err, req, res, next) => {
