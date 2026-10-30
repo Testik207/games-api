@@ -1,0 +1,25 @@
+openapi: 3.0.3
+info:
+  title: Games API
+  version: 1.0.0
+  description: Course backend using an in-memory array. Restarting the server resets
+    all data. Errors are JSON objects with an error property. GET /games returns names
+    only; GET /games/{id} returns full details.
+servers:
+- url: /
+  description: Current API server
+tags:
+- name: games
+  description: List, read, create and delete games
+paths: {}
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+      example:
+        error: Game 999 was not found.

@@ -1,0 +1,23 @@
+{
+  "name": "games-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Course backend: games REST API with OpenAPI documentation",
+  "main": "index.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "swagger-ui-express": "5.0.1",
+    "yamljs": "0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.14"
+  }
+}
