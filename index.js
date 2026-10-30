@@ -12,6 +12,17 @@ function createApp() {
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.get('/', (req, res) => res.redirect('/docs'));
 
+  // BEGIN STEP 2
+  // The course uses in-memory data. Restarting resets this array.
+  const games = [
+    { id: 1, name: 'The Witcher 3', price: 29.99 },
+    { id: 2, name: 'Cyberpunk 2077', price: 59.99 },
+    { id: 3, name: 'Minecraft', price: 19.99 }
+  ];
+
+  // The list story requires names only, without full game details.
+  app.get('/games', (req, res) => res.json(games.map(game => game.name)));
+  // END STEP 2
 
 
 
