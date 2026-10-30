@@ -43,6 +43,28 @@ function createApp() {
   });
   // END STEP 3
 
+  // BEGIN STEP 4
+  // Keep IDs unique even after deleting games.
+  let nextId = Math.max(...games.map(game => game.id)) + 1;
+
+  app.post('/games', (req, res) => {
+    if (!req.is('application/json')) {
+      return res.status(400).json({ error: 'Send an application/json request body.' });
+    }
+    const { name, price } = req.body || {};
+    if (typeof name !== 'string' || !name.trim() ||
+        typeof price !== 'number' || !Number.isFinite(price) || price < 0) {
+      return res.status(400).json({
+        error: 'name must be a non-empty string and price must be a non-negative number.'
+      });
+    }
+    const game = { id: nextId++, name: name.trim(), price };
+    games.push(game);
+    return res.status(201)
+      .location(`${req.protocol}://${req.get('host')}/games/${game.id}`)
+      .json(game);
+  });
+  // END STEP 4
 
 
   app.use((req, res) => res.status(404).json({ error: 'Endpoint was not found.' }));
